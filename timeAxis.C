@@ -9,30 +9,28 @@ void temperatureOverTime(){
 	//t->Draw("Temperature:Time");
 	//auto graph = (TGraph*)gPad->GetPrimitive("Graph");
 	//graph->GetXaxis()->SetTimeFormat("%Y");
-	
 
 	//Data loading from TTree
 	Double_t temperature = 0;
 	t->SetBranchAddress("Temperature",&temperature);
 	Long64_t N = t->GetEntries();
 
-	Int_t y[N];
+	Double_t y[N+100];
 
 	for(Long64_t i=0; i<N; i++){
 		t->GetEntry(i);
-		y[i] = (Int_t)temperature;
-		std::cout << y[i] << std::endl;
+		y[i] = temperature;
 	}
 	
 	Int_t time = 0;
 	t->SetBranchAddress("Time",&time);
+	N = t->GetEntries();
 
-	Int_t x[N];
+	Double_t x[N+100];
 
 	for(Long64_t i=0; i<N; i++){
 		t->GetEntry(i);
-		x[i] = time;
-		std::cout << x[i] << std::endl;
+		x[i] = (Double_t)time;
 	}
 
 	//Drawing
