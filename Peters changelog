@@ -1,0 +1,6 @@
+10-30: devised method the use time values as DTime in x[]
+11-01: Created ability to identify hottest hours (on halloweens). Implemented prime numbers.
+11-02: Implemented way to rank days in terms of hotness
+11-03: Added support for user selecting a date of interest
+11-04: Added plotting of ranking
+11-05: Improved efficiency of algorithms from sluggish to near-instant
