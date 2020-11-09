@@ -10,28 +10,11 @@
 #include <iostream>
 #include <utility>
 using namespace std;
-/*1951-01-01 is the earliest entry*/
-int NeverCalled (){
-  std::vector<int> myvector;
 
-  // set some values (from 1 to 10)
-  for (int i=1; i<=10; i++) myvector.push_back(i);
 
-  // erase the 6th element
-  myvector.erase (myvector.begin()+5);
 
-  // erase the first 3 elements:
-  myvector.erase (myvector.begin(),myvector.begin()+3);
+/* //This comment block contains a lot of the code I implemented but didn't end up using in the final version.
 
-  std::cout << "myvector contains:";
-  for (unsigned i=0; i<myvector.size(); ++i)
-    std::cout << ' ' << myvector[i];
-  std::cout << '\n';
-
-  return 0;
-}
-// TDatime xAsDate(){	
-// }
 bool IsPrime(Long64_t n){//only works for 0-50,1950-2020 //I shouldn't have had to write this in Python
 	if (n==2||n==3||n==5||n==7||n==11||n==13||n==17||n==19||n==23||n==29||n==31||n==37||n==41||n==43||n==47||n==1951||n==1973||n==1979||n==1987||n==1993||n==1997||n==1999||n==2003||n==2011||n==2017){
 		return true;
@@ -58,12 +41,7 @@ Long64_t FindByIndex(vector<ULong64_t> set, ULong64_t InterestIndex, Long64_t N)
 	cout << "date not in set"<<endl;
 	return -1;
 }
-
-
-
-
-bool checkHottest(Double_t x[],Double_t y[],vector<int> ApplicableHours){
-// bool checkHottest(Double_t x[],Double_t y[]){
+bool checkHottest(Double_t x[],Double_t y[],vector<int> ApplicableHours){ // finds the hottest hour in set given
 	Double_t MaxTemp=0;
 	Long64_t HottestDayIndex;	// vector<int> ties;
 	for (ULong64_t i=0; i<ApplicableHours.size(); i++){
@@ -78,8 +56,7 @@ bool checkHottest(Double_t x[],Double_t y[],vector<int> ApplicableHours){
 	cout << "Hottest hour's temperature is: " << MaxTemp <<endl;
 	return true;
 }
-vector<ULong64_t> SortByHottest(Double_t x[],Double_t y[],vector<int> ApplicableHours){
-	// bool checkHottest(Double_t x[],Double_t y[]){
+vector<ULong64_t> SortByHottest(Double_t x[],Double_t y[],vector<int> ApplicableHours){ //sorts hours, and returns days sorted by heat. Extremely inefficient.
 	vector<ULong64_t> RankingIndices;	//contains the index of the days ranked by hotness
 	Double_t MaxTemp;
 	Long64_t HottestDayIndex;	// vector<int> ties;
@@ -112,7 +89,7 @@ vector<ULong64_t> SortByHottest(Double_t x[],Double_t y[],vector<int> Applicable
 	// cout << "The size after:" << RankingIndices.size() << endl;
 	return RankingIndices;
 }
-vector<int> allHalloweens(Double_t x[],Long64_t N){ //returns all hours that are new years
+vector<int> allHalloweens(Double_t x[],Long64_t N){ //returns all hours that are halloweens
 	vector<int> a;
 	for(Long64_t i=0; i<N; i++){
 		TDatime time;
@@ -145,20 +122,8 @@ vector<int> allPrimeDates(Double_t x[],Long64_t N){ //returns all hours that hav
 	}	
 	return a;
 }
-vector<int> descendingDates(Double_t x[],Long64_t N){ //unimplemented
-	vector<int> a;
-	for(Long64_t i=0; i<N; i++){
-		TDatime time;
-		time.Set(x[i]);
-		string S = time.AsString();
-		if (S[0]<S[1] ){//yyyy-mm-dd
-			a.push_back(i);
-		}
-	}	
-	return a;
-}
 
-Long64_t FindRankOfDay(vector<ULong64_t> ranking, ULong64_t InterestIndex, Long64_t N, TDatime xd[]){ 
+Long64_t FindRankOfDay_old(vector<ULong64_t> ranking, ULong64_t InterestIndex, Long64_t N, TDatime xd[]){ // finds rank of the day in question for the earlier implementation
 	for(ULong64_t i=0; i<ranking.size(); i++){
 		// cout << "comparing :"  <<xd[ranking[i]].GetDate() <<endl;
 		// cout << "with: "<<xd[InterestIndex].GetDate()<<endl;
@@ -169,9 +134,10 @@ Long64_t FindRankOfDay(vector<ULong64_t> ranking, ULong64_t InterestIndex, Long6
 	cout << "date not in set"<<endl;
 	return -1;
 }
+*/
+// pair <vector<TDatime> ,vector<ULong64_t>> DaysWithHotness(TDatime xd[],Double_t y[],Long64_t N){ //tryals with pair didn't work
 
-// pair <vector<TDatime> ,vector<ULong64_t>> DaysWithHotness(TDatime xd[],Double_t y[],Long64_t N){
-vector<TDatime> DaysWithHotness1(TDatime xd[],Double_t y[],Long64_t N){
+vector<TDatime> DaysWithHotness1(TDatime xd[],Double_t y[],Long64_t N){ //The new, efficient way to convert all hours into days with the hottest temperature
 	vector<TDatime> Days;	
 	vector<Double_t> Temperatures;		
 	Double_t MaxTemp = 0;
@@ -189,7 +155,7 @@ vector<TDatime> DaysWithHotness1(TDatime xd[],Double_t y[],Long64_t N){
 	}
 	return Days;	
 }
-vector<Double_t> DaysWithHotness2(TDatime xd[],Double_t y[],Long64_t N){
+vector<Double_t> DaysWithHotness2(TDatime xd[],Double_t y[],Long64_t N){ //could not figure out how to return both days and temps at once, so the same function runs twice, but returns different values
 	vector<TDatime> Days;	
 	vector<Double_t> Temperatures;		
 	Double_t MaxTemp = 0;
@@ -207,8 +173,8 @@ vector<Double_t> DaysWithHotness2(TDatime xd[],Double_t y[],Long64_t N){
 	}
 	return Temperatures;	
 }	
-// /*
-vector<TDatime> SortDaysByHottest(vector<TDatime> xDays, vector<Double_t> yDays){
+
+vector<TDatime> SortDaysByHottest(vector<TDatime> xDays, vector<Double_t> yDays){ //the new, efficient loop that sorts days by hotness
 	vector<TDatime> Ranking;	
 	Double_t MaxTemp;
 	Long64_t HottestDayIndex;	
@@ -222,30 +188,30 @@ vector<TDatime> SortDaysByHottest(vector<TDatime> xDays, vector<Double_t> yDays)
 		}
 		Ranking.push_back(xDays[HottestDayIndex]);
 		
-		xDays.erase(xDays.begin()+HottestDayIndex);
+		xDays.erase(xDays.begin()+HottestDayIndex);//deletes the hottest day, making the list smaller, thereby making the algorithm faster
 		yDays.erase(yDays.begin()+HottestDayIndex);
 		if (Ranking.size()%100==0){
 			// cout << "Remaining stuff:" << xDays.size() << endl;
 		}	
 	}		
-	// cout << "The size of the  (faster)  ranking:" << Ranking.size() << endl;
 	cout << "The size of the ranking:" << Ranking.size() << endl;
 	return Ranking;
 }
 
-Long64_t FindRankOfDay2(vector<TDatime> xDays, TDatime HourOfInterest){ 
+Long64_t FindRankOfDay(vector<TDatime> xDays, TDatime HourOfInterest){ // finds rank of the day in question for the newest implementation
 	for(ULong64_t i=0; i<xDays.size(); i++){
 		if (xDays[i].GetDate()==HourOfInterest.GetDate()){
 			return i;
 		}
 	}
-	cout << "date not in faster set"<<endl;
+	cout << "date not inside the ranking"<<endl;
 	return -1;
 }
 
 	
-// */
-void funFact(){
+
+void funFact(){ //This is the main thing that runs
+	
 	/*start mostly Erik's code*/
 	auto t = readFile("data/rawdata_smhi-opendata_1_52240_20200905_163726.csv"); //Data loading from TTree
 	Double_t temperature = 0;
@@ -255,8 +221,7 @@ void funFact(){
 	for(Long64_t i=0; i<N; i++){
 		t->GetEntry(i);
 		y[i] = temperature;
-	}
-	// cout << "Y length: " << N <<endl;	
+	}	
 	Int_t time = 0;
 	t->SetBranchAddress("Time",&time);
 	N = t->GetEntries();
@@ -265,107 +230,78 @@ void funFact(){
 		t->GetEntry(i);
 		x[i] = (Double_t)time;
 	}
-	// cout << "X length: " << N <<endl;	
 	// cout<<"Number of hours in the sample: "<<t->GetEntries()<<endl;
 	/*end mostly Erik's code*/
-	
-	// int RankingSize=1000+1;
-	
+		
 	TDatime xd[N+100]; //x, but as date
 	for(Long64_t i=0; i<N; i++){
 		xd[i].Set(x[i]);
 	}
+	
+	//asks user for input
 	cout << "Please insert a date and time of interest of format YYYY-MM-DD" << endl;
 	TString input;
 	cin >> input;
-	
-	if (input == " "){
-		input = "2012-08-03";
-	}	
+	cout << "You have inputted: "<< input << endl;
 	// input = "2011-11-11";
 	// input = "2018-08-03";
 	// input = "2018-08-03";
+	if (input=="a"){
+		input = "2011-11-11"; //for quick testing
+	}
 
-	TString input2 = input + " 23:00:00";
+	TString input2 = input + " 23:00:00"; //so that it is a valid dTDatime
 	
 	
 	TDatime HourOfInterest;
 	HourOfInterest = TDatime(input2);
+	
+
+	
+
+	
+	
+	
+	
+	
+	// The earlier version of the sorting function inducer. Very inefficient. Left here for reference.
+	/*
 	Long64_t HourOfInterestIndex = FindHourByIndex(xd, HourOfInterest, N);
-	
-	// cout << HourOfInterest.AsString() << endl;
-	// cout << "The index of the requested day is: "<< HourOfInterestIndex << endl;
-	cout << "You have inputted: "<< input << endl;
-
-	// vector<int> b = everything(x,N);
-	
-
-	// for (Long64_t i=0; i<b.size(); i++){
-		// TDatime time;
-		// time.Set(x[b[i]]);	
-		// cout << "Halloween is: " << time.GetDate() <<endl;
-	// }
-	
-
-	
 	// vector<ULong64_t> c=SortByHottest(x,y,everything(x,N));
-	
-	TH2* h2 = new TH2F("h2", input, 2, -1.6, 1.6, 20, 2000, 2020);
-	
-	
-	// Long64_t rank = FindRankOfDay(c, HourOfInterestIndex, N,xd);
-	// cout << "Out of all days, this day was #"<< rank+1 << " in terms of hotness" << endl;
-	// for(Long64_t i=0; i<rank; i++){
+	// Long64_t rank_old = FindRankOfDay_old(c, HourOfInterestIndex, N,xd);
+	// cout << "Out of all days, this day was #"<< rank_old+1 << " in terms of hotness" << endl;
+	// for(Long64_t i=0; i<rank_old; i++){
 		// h2->Fill(1,xd[c[i]].GetYear());
 	// }
-	// for(Long64_t i=rank+1; i<101; i++){
+	// for(Long64_t i=rank_old+1; i<101; i++){
 		// h2->Fill(-1,xd[c[i]].GetYear());
 	// }
+	*/
 	
+	
+	//induces the sorting function
 	vector<TDatime> xDays =   DaysWithHotness1(xd,y,N);
 	vector<Double_t> yDays = DaysWithHotness2(xd,y,N);
 	
 	vector<TDatime> FasterRank = SortDaysByHottest(xDays,yDays);
-	Long64_t rank2 = FindRankOfDay2(xDays,HourOfInterest);
+	Long64_t rank = FindRankOfDay(xDays,HourOfInterest);
 	
-	cout << "Out of all days, this day was #"<< rank2+1 << " in terms of hotness" << endl;
+	cout << "Out of all days, this day was #"<< rank+1 << " in terms of hotness" << endl;
 	
-	for(Long64_t i=0; i<rank2; i++){
+	
+	//plotting
+	TH2* h2 = new TH2F("h2", input, 2, -1.6, 1.6, 20, 2000, 2020);
+	for(Long64_t i=0; i<rank; i++){
 		h2->Fill(1,FasterRank[i].GetYear());
 	}
-	for(ULong64_t i=rank2+1; i<FasterRank.size(); i++){
+	for(ULong64_t i=rank+1; i<FasterRank.size(); i++){
 		h2->Fill(-1,FasterRank[i].GetYear());
-	}
-	
-	
+	}	
 	TAxis* a = h2->GetXaxis();
     a->SetNdivisions(-502);
     a->ChangeLabel(1,-1,-1,-1,-1,-1,"                                                          colder");
     a->ChangeLabel(-1,-1,-1,-1,-1,-1,"hotter                                                         ");
-
 	h2->Draw("box");
-	
-	
-	
-
-	
 }
-
-/*	// exploration loop
-	for(Long64_t i=0; i<10; i++){
-		cout << "The time: " << x[i] <<endl;
-		TDatime time;
-		time.Set(x[i]);		
-		// cout << "The time 2: " << time.AsString() <<endl;
-		cout << "The time 2: " << time.GetDay() <<endl;
-		cout << "The time 3: " << time.GetDate() <<endl;
-		cout << "The temperature: " << y[i] <<endl;
-	}
-*/	
-/*	// printer
-for (vector<int>::size_type i = 0; i < c.size(); i++) {
-	cout << c.at(i) << endl;
-}
-*/	
 
 
